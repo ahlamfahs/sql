@@ -1,0 +1,77 @@
+#This analysis utilized the following actor dataset:
+
+CREATE TABLE actor (
+    ID INTEGER PRIMARY KEY,
+    Name TEXT,
+    age INTEGER,
+    maritalStatus TEXT
+);
+
+INSERT INTO actor (Name,age,MaritalStatus)
+VALUES
+('Meryl Streep','72','D'),
+('Tom Hanks','65','M'),
+('Robert Downey Jr', '58','M');
+
+#This analysis utilized the following movies dataset:
+    
+CREATE TABLE movies (
+    ID INTEGER PRIMARY KEY,
+    movie_name TEXT,
+    released INTEGER,
+    revenue NUMERIC
+);
+
+INSERT INTO movies (movie_name,released,revenue)
+VALUES
+('The Devil Wears Prada', '2006','326M'),
+('Forrest Gump','1994','678M'),
+('Iron man', '2008','585M'),
+('Saving Private Ryan' ,'1998','482M'),
+('The Iron Lady','2011','116M'),
+('Sherlock Holmes' ,'2009','524M');
+
+#This analysis utilized the following casting dataset:
+
+CREATE TABLE casting(
+    ID INTEGER PRIMARY KEY,
+    id_actor INTEGER,
+    id_movie INTEGER
+);
+    
+INSERT INTO casting (id_actor,id_movie)
+VALUES  
+(1,1),
+(1,5),
+(2,2),
+(2,4),
+(3,3),
+(3,6);
+
+SELECT* FROM actor;
+SELECT* FROM movies;
+SELECT* FROM casting;
+
+# Analysis: 
+
+
+SELECT actor.name,movies.movie_name,movies.released
+FROM casting
+JOIN actor
+ON casting.id_actor=actor.id
+JOIN movies
+ON casting.id_movie=movies.id
+;
+
+
+SELECT actor.name,min(movies.released) as first_movie,sum(revenue)as total_revenue
+FROM casting
+JOIN actor
+ON casting.id_actor=actor.id
+JOIN movies
+ON casting.id_movie=movies.id
+GROUP BY actor.name
+;
+    
+    
+    
