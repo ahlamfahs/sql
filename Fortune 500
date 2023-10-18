@@ -81,3 +81,26 @@ SELECT company_name,Paid_time_off_days,maternity_leave_weeks
 FROM fortune_companies 
 WHERE Paid_time_off_days>=15
 AND maternity_leave_weeks>12;
+
+#What are the top companies by revenue in each industry ?
+SELECT company_name, industry, 
+round(max(revenue),1) as high_revenue
+FROM fortune_companies
+GROUP BY industry
+order by revenue desc
+
+#what are the lowest paid time off for company in each industry?
+SELECT company_name,
+industry,
+min(paid_time_off_days) as lowest_pto
+FROM fortune_companies
+GROUP BY industry
+order by paid_time_off_days asc;
+
+#what are the Energy company_name who benefits from helthcare system?
+SELECT company_name,
+healthcare_benefits
+from fortune_companies
+WHERE healthcare_benefits=1
+AND industry ="Energy";
+
