@@ -71,19 +71,24 @@ FROM fortune_companies
 WHERE Industry="Energy";
 
 #Which industries have an average revenue of at least $300 million, and what are their avg revenues?
-SELECT company_name ,industry, ROUND(AVG(revenue),1) as avg_revenue_millions
+SELECT company_name ,
+industry, 
+ROUND(AVG(revenue),1) as avg_revenue_millions
 FROM fortune_companies
 GROUP BY industry
 HAVING avg_revenue_millions>=300;
 
 #Which companies have maternity_leave_weeks at least 12 and paid time off days at least 15?
-SELECT company_name,Paid_time_off_days,maternity_leave_weeks
+SELECT company_name,
+Paid_time_off_days,
+maternity_leave_weeks
 FROM fortune_companies 
 WHERE Paid_time_off_days>=15
 AND maternity_leave_weeks>12;
 
 #What are the top companies by revenue in each industry ?
-SELECT company_name, industry, 
+SELECT company_name,
+industry, 
 round(max(revenue),1) as high_revenue
 FROM fortune_companies
 GROUP BY industry
@@ -104,12 +109,17 @@ from fortune_companies
 WHERE healthcare_benefits=1
 AND industry ="Energy";
 
-#What are the companies Who have at least 6 years employee average service and 15 days as Annual Leave?
+#What are the companies Who have at least 6 years employee average service and have more than 3000 employees?
 SELECT company_name,
 industry,
 round(avg_employee_tenure,0) as avg_emp_service,
-paid_time_off_days as annual_leave 
+employees as Total_employees
 FROM fortune_companies
-WHERE avg_emp_service>=6
-AND annual_leave >=15 
+WHERE avg_emp_service>=7
+AND Total_employees>=3000
+order by industry desc
+
+
+
+
 
