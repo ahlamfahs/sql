@@ -104,3 +104,12 @@ from fortune_companies
 WHERE healthcare_benefits=1
 AND industry ="Energy";
 
+#What are the companies Who have at least 6 years employee average service and 15 days as Annual Leave?
+SELECT company_name,
+industry,
+round(avg_employee_tenure,0) as avg_emp_service,
+paid_time_off_days as annual_leave 
+FROM fortune_companies
+WHERE avg_emp_service>=6
+AND annual_leave >=15 
+
