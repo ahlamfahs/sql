@@ -25,17 +25,69 @@ VALUES
     (14, 'Rewards Credit Card', 'Credit Card', 21.99, 0.00, 0.00),
     (15, 'Auto Loan', 'Loan', 4.25, 0.00, 20000.00);
 
-# Selection of all products Name :
-SELECT product_name FROM bank_products;
+-- Selection of all products Name :
+SELECT product_name 
+FROM bank_products;
 
-# Selection of product Name showing product_type Checking or Savings:
-SELECT product_name FROM bank_products 
+-- Selection of product Name showing product_type Checking or Savings:
+SELECT product_name 
+FROM bank_products 
 WHERE product_type="Checking" 
 or product_type="Savings";
 
-# Selection of product Name and ineterst rate showing product_type 'Savings', interest rate at least 0.75 and no monthly fees: 
-SELECT product_name,interest_rate
+-- Selection of product Name and ineterst rate showing product_type 'Savings', interest rate at least 0.75 and no monthly fees: 
+SELECT product_name,
+interest_rate
 FROM bank_products
 WHERE product_type="Savings"
 AND interest_rate>=0.75
 AND monthly_fee=0;
+
+--Which bank product has the lowest minimum balance, and what is that minimum balance?
+SELECT product_name, minimum_balance
+FROM bank_products
+WHERE minimum_balance > 0
+ORDER BY minimum_balance ASC
+LIMIT 1;
+
+--How many bank products are in the 'bank_products' table?
+SELECT COUNT(*) AS TotalProducts
+FROM bank_products;
+
+--What is the product name and interest rate for 'Business Credit Card'?
+SELECT product_name, 
+interest_rate
+FROM bank_products
+WHERE product_name = 'Business Credit Card';
+
+--What is the average monthly fee for all bank products?
+SELECT AVG(monthly_fee) AS AverageMonthlyFee
+FROM bank_products;
+
+--Which bank products are classified as 'Loan' type, and what are their interest rates?
+SELECT product_name, 
+interest_rate
+FROM bank_products
+WHERE product_type = 'Loan';
+
+--What is the product type with the highest average interest rate, and what is that average interest rate?
+SELECT product_type,
+AVG(interest_rate) AS AverageInterestRate
+FROM bank_products
+GROUP BY product_type
+ORDER BY AverageInterestRate DESC
+LIMIT 1;
+
+--What is the sum of monthly fees for all bank products that have a monthly fee greater than $0.00?
+SELECT SUM(monthly_fee) AS TotalMonthlyFees
+FROM bank_products
+WHERE monthly_fee > 0.00;
+
+-- Which bank product types have at least one product with an interest rate above 1.0?
+SELECT DISTINCT product_type
+FROM bank_products
+WHERE product_type IN (
+    SELECT DISTINCT product_type
+    FROM bank_products
+    WHERE interest_rate > 1.0
+);
