@@ -22,3 +22,45 @@ SELECT* FROM songs;
 
 DELETE FROM songs WHERE id=1;
 SELECT* FROM songs;
+
+--How many songs are in the 'songs' table?
+SELECT COUNT(*) AS TotalSongs
+FROM songs;
+
+--What is the title, artist, and duration of the song with the longest duration?
+SELECT title,
+artist, 
+duration
+FROM songs
+WHERE duration = (SELECT MAX(duration) FROM songs);
+
+-- How many songs in the 'Rock' genre are in the 'songs' table?
+SELECT COUNT(*) AS RockSongs
+FROM songs
+WHERE genre = 'Rock';
+
+--What are the top 3 songs with the highest durations, and what are their titles and artists?
+SELECT title, 
+artist, 
+duration
+FROM songs
+ORDER BY duration DESC
+LIMIT 3;
+
+--How many unique artists are there in the 'songs' table?
+SELECT COUNT(DISTINCT artist) AS UniqueArtists
+FROM songs;
+
+--What is the total duration of all songs in the 'Rock' genre?
+SELECT SUM(duration) AS TotalDuration
+FROM songs
+WHERE genre = 'Rock';
+
+--Which artist has the most songs in the 'Pop' genre, and how many songs do they have?
+SELECT artist,
+COUNT(*) AS SongCount
+FROM songs
+WHERE genre = 'Pop'
+GROUP BY artist
+ORDER BY SongCount DESC
+LIMIT 1;
